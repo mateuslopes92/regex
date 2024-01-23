@@ -90,3 +90,41 @@ This line is also too long................`;
 const tooBigRegex = /^.{30}.+$/g;
 const tooBigFound = tooBigText.match(tooBigRegex);
 console.log(tooBigFound);
+// ^ take the start of the string .{30} say the limit is 30 of length and .+$ verify if is bigger than 30
+
+
+/**
+ * Some words in this text are accidentally repeated. Remove the doubles.
+ */
+
+const doubleWordsText = `I had just just consummated an unusually hearty dinner, of which the dyspeptic truffe formed not the least important item, and was sitting alone in the dining-room dining-room, and at my elbow a small table which I had rolled up to the fire, and upon which were some apologies for dessert, with some miscellaneous bottles bottles of wine, spirit and liqueur. In the morning I had had been reading Glover's "Leonidas", Wilkie's Wilkie's "Epigoniad"`;
+
+const doubleWordsRegex = /\b(.+)\b\s+\1\b/g;
+const doubleWordsReplaced = doubleWordsText.replace(doubleWordsRegex, "$1");
+console.log(doubleWordsReplaced);
+// \b take the words boundaries and \1 match the word that has already been matched
+
+
+/**
+ * It is a common wisdom that regular expressions are not a good way of dealing with HTML, and there are perfectly good reasons for this.
+ * But in this excercise you only need to match simple HTML tags.
+ */
+const htmlTagText = `<!DOCTYPE html>
+<html>
+<head>
+<title>This is a title</title>
+</head>
+<body>
+<p>Hello world!</p>
+</body>
+</html>`;
+
+const htmlTagRegex = /<[^<>]+>/g;
+const htmlTagsFound = htmlTagText.match(htmlTagRegex);
+console.log(htmlTagsFound);
+// An HTML tag is a pair of angular brackets <> with some symbols between them, except other brackets
+
+
+/**
+ *
+ */
