@@ -126,5 +126,19 @@ console.log(htmlTagsFound);
 
 
 /**
- *
+ * Cut numbers to two digits after floating point
  */
+const floatingNumberText = `1 Euro = 1.351299 US Dollar
+British Pound = 1.614873 US Dollar
+Australian Dollar = 0.916063 US Dollar
+Canadian Dollar = 0.947400 US Dollar
+Emirati Dirham = 0.272257 US Dollar
+Swiss Franc = 1.096267 US Dollar
+Chinese Yuan = 0.164114 US Dollar
+Malaysian Ringgit = 0.310681 US Dollar
+New Zealand Dollar = 0.819950 US Dollar`;
+
+const replaceTwoDigitsRegex = /(\.\d\d)(\d+)/g;
+const replacedText = floatingNumberText.replace(replaceTwoDigitsRegex, "$1");
+console.log(replacedText);
+//the second group within () will be replaced by the first ()
