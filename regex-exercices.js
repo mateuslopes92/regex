@@ -10,7 +10,7 @@ Gas constant 8.3144621 J/mol*K`;
 
 const myFloatingRegex = /\d\.\d\d+/g;
 const floatingPointNums = floatingPointNumsText.match(myFloatingRegex);
-console.log(floatingPointNums);
+//console.log(floatingPointNums);
 // the \d gets the digit before the dot, the \. get the dot and the \d\d+ get all numbers afetr the dot
 
 
@@ -30,7 +30,7 @@ const filmsText = `1 The Shawshank Redemption (1994)
 
 const filmsRegex = /.*\(19[1-8]\d\)/g;
 const filmsTextFind = filmsText.match(filmsRegex);
-console.log(filmsTextFind);
+//console.log(filmsTextFind);
 // the .*\ get all before the next match, the 19 get the number 19 and [1-8] get numbers between 1 and 8
 
 
@@ -51,7 +51,7 @@ Blue #00F`;
 
 const hexRegex = /#[\w]{6}/g;
 const hex24BitCodes = hexCodesText.match(hexRegex);
-console.log(hex24BitCodes)
+//console.log(hex24BitCodes)
 // # take the start of the hex code [\w] get the number with latin digit and {6} is the length of the last match
 
 
@@ -74,7 +74,7 @@ Black #000`
 
 const grayScaleRegex = /#([0-9a-fA-F]{1,2})\1\1/g;
 const grayScaleFinds = grayScaleColorsText.match(grayScaleRegex);
-console.log(grayScaleFinds)
+//console.log(grayScaleFinds)
 // the # get the start of the hex color, [0-9a-fA-F]{1,2})\1\1 get the repeted patterns
 
 
@@ -89,7 +89,7 @@ This line is also too long................`;
 
 const tooBigRegex = /^.{30}.+$/g;
 const tooBigFound = tooBigText.match(tooBigRegex);
-console.log(tooBigFound);
+//console.log(tooBigFound);
 // ^ take the start of the string .{30} say the limit is 30 of length and .+$ verify if is bigger than 30
 
 
@@ -101,7 +101,7 @@ const doubleWordsText = `I had just just consummated an unusually hearty dinner,
 
 const doubleWordsRegex = /\b(.+)\b\s+\1\b/g;
 const doubleWordsReplaced = doubleWordsText.replace(doubleWordsRegex, "$1");
-console.log(doubleWordsReplaced);
+//console.log(doubleWordsReplaced);
 // \b take the words boundaries and \1 match the word that has already been matched
 
 
@@ -121,7 +121,7 @@ const htmlTagText = `<!DOCTYPE html>
 
 const htmlTagRegex = /<[^<>]+>/g;
 const htmlTagsFound = htmlTagText.match(htmlTagRegex);
-console.log(htmlTagsFound);
+//console.log(htmlTagsFound);
 // An HTML tag is a pair of angular brackets <> with some symbols between them, except other brackets
 
 
@@ -140,5 +140,111 @@ New Zealand Dollar = 0.819950 US Dollar`;
 
 const replaceTwoDigitsRegex = /(\.\d\d)(\d+)/g;
 const replacedText = floatingNumberText.replace(replaceTwoDigitsRegex, "$1");
-console.log(replacedText);
+//console.log(replacedText);
 //the second group within () will be replaced by the first ()
+
+
+/**
+ * Insert commas in the numbers for greater readability before each group of three digits.
+ */
+const inputNoCommaNumsText = `Ten Countries with the Highest Population:
+1 China 1361220000
+2 India 1236800000
+3 United States 317121000
+4 Indonesia 237641326
+5 Brazil 201032714
+6 Pakistan 184872000
+7 Nigeria 173615000
+8 Bangladesh 152518015
+9 Russia 143600000
+10 Japan 127290000`;
+
+const commaNumRegex = /(\d)(?=(\d{3})+\b)/g;
+const replaceWithCommas = inputNoCommaNumsText.replace(commaNumRegex, "$1,");
+//console.log(replaceWithCommas);
+//the first () take the first number and the second () have the match of the pattern to put the comma
+
+
+/**
+ * Match all function declarations that are not uppercase
+ */
+const functionsText = `function foo() {return bar();}
+function Foo() {return Bar();}
+function Baz(x) {return function(y){return x+y;}}
+function bazEx(x) {return function(y, z){return x+y+z;}}
+function bar() {return 0;}
+function Bar() {return 1;}`;
+
+const functionsRegex = /function\s+[a-z]\w+\(.*?\)/g;
+const functionsLowerCase = functionsText.match(functionsRegex);
+// matching only the declarations of the functions
+
+
+/**
+ * Change date formats from yyyy-mm-dd to dd.mm.yyyy
+ */
+const dateText = `Robert Boyle 1627-01-25 — 1691-12-31
+Antoine Lavoisier 1743-08-26 — 1794-05-08
+Michael Faraday 1791-09-22 — 1867-06-25
+Louis Pasteur 1822-12-27 — 1895-09-28
+Alfred Nobel 1833-10-21 — 1896-12-10
+Dmitri Mendeleev 1834-02-08 — 1907-02-02
+Marie Curie 1867-11-07 — 1934-07-04
+Linus Pauling 1901-02-28 — 1994-08-19`;
+
+const dateRegex = /(\d{4})-(\d\d)-(\d\d)/g;
+const dateReplaced = dateText.replace(dateRegex, "$3.$2.$1");
+//console.log(dateReplaced);
+
+
+/**
+ * Match valid time in 24h format
+ */
+const invalid24HourText = `Valid and invalid time:
+00:15
+07:40
+08:61
+09:59
+13:00
+14:7
+20:20
+23:61
+24:15`;
+
+const formatHourRegex = /(0|[0-2])([0-3]|[5-9]):(0|[0-5])[0-9]/g; // or ((0|1)\d|2[0-3]):[0-5]\d
+const valid24Hour = invalid24HourText.match(formatHourRegex);
+//console.log(valid24Hour)
+
+
+/**
+ * Match valid time in 12-hour clock format
+ */
+const amPmText = `Valid and invalid time:
+00:15 AM
+7:40 AM
+8:51 AM
+8:61 AM
+09:59
+1:00 PM
+2:00 PM
+19:34 PM`;
+
+const valid12HourRegex = /(00|[0-8]):[0-5]\d\s(AM|PM)/g;
+const validAmPmHours = amPmText.match(valid12HourRegex);
+// console.log(validAmPmHours);
+
+
+/**
+ * In Pascal, fuction parameters are delimited by a semicolon.
+ * Replace it by C-style comma delimiter. Do not modify semicolons elsewhere.
+ */
+const pascalText = `void Foo(int x; float y; char z)
+{
+write(x, y, z);
+}
+
+int Avg(List<int> l; int count)
+{
+return Sum(l, count)/count;
+}`;
+// const pascalRegex = //g;
