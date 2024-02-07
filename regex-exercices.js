@@ -247,4 +247,100 @@ int Avg(List<int> l; int count)
 {
 return Sum(l, count)/count;
 }`;
-// const pascalRegex = //g;
+const pascalRegex = /;(?=[^\(]+\))/g;
+const pascalReplaced = pascalText.replace(pascalRegex, ",");
+// console.log(pascalReplaced);
+
+
+/**
+ * Change variable initialization to C-style: var a = new A(...) -> A a(...);
+ */
+const variableWithNew = `function init() {
+  var foo = new Foo();
+  var bar = new Bar(foo, true);
+  var foos = new List<Foo>(3);
+  var baz = new Baz(random());
+  }`;
+const variableRegex = /var\s+(\w+)\s+=\s+new\s+((?:\w|<|>)+)(.+;)/g;
+const variableChanged = variableWithNew.replace(variableRegex, "$2 $1$3");
+// console.log(variableChanged);
+
+
+/**
+ * Match IPv6 addresses. An IPv6 address consists of 8 colon-delimited blocks of 4 hexadecimal digits.
+ * Blocks of all zeroes can be omitted. Leading zeroes in a block can be omitted too.
+ */
+const ipV6AddressText = `Initial address: 2001:0db8:0000:0000:0000:ff00:0042:8329
+After removing all leading zeroes: 2001:db8:0:0:0:ff00:42:8329
+After omitting consecutive sections of zeroes: 2001:db8::ff00:42:8329
+Another example: 2607:f0d0:1002:0051:0000:0000:0000:0004
+After removing all leading zeroes: 2607:f0d0:1002:51:0:0:0:4
+After omitting consecutive sections of zeroes: 2607:f0d0:1002:51::4`;
+const ipv6Regex = /(\w*)(:|::)\b\w+/g;
+const ipv6Adresses = ipV6AddressText.match(ipv6Regex);
+// console.log(ipv6Adresses);
+
+
+/**
+ * Highlight valid 24 and 32 bit hexadecimal colors. Colors start with #
+ */
+const colorsValidText = `White: #ffffff, #ffffffff
+Black:#000000 #000000ff
+Semitrnasparent green: #00ff0088
+Nonhexadecimal: #00ffhh #agaeffe0
+Wrong bytes count:#00ff00f #fffff #888888fff`;
+const highlightValidColorsRegex = /#(([0-9a-f]{6})|([0-9a-f]{8}))\b/g;
+const foundValidColorsHex = colorsValidText.match(highlightValidColorsRegex);
+// console.log(foundValidColorsHex);
+
+
+/**
+ * Replace addition operator a + b with Add(a, b).
+ */
+const replaceCallText = `int c = a+b;
+var average = (a1 + a2)/2
+sum(foo, bar, x) = foo(x) + bar(x)
+var dotProduct(v1, v2) = v1.x*v2.x + v1.y*v2.y`;
+const replaceCallRegex = /(\w[a-z0-9()*.]+)\s?\+\s?(\w[a-z0-9()*.]+)/g;
+const resultReplaceCall = replaceCallText.replace(replaceCallRegex, "Add($1, $2)");
+// console.log(resultReplaceCall);
+
+
+/**
+ * Match the URL parameters in the form param : value
+ */
+const urlsText = `http://www.learnregexp.com?excercise=extract query from URL
+https://www.google.com/search?q=regexp
+http://pitchimprover.com/index.php?type=Perfect
+http://www.learnregexp.com?excercise=extract-host-from-URL`;
+const urlRegex = /\?([^=]+)=(.+)\b/g;
+const urlsParams = urlsText.match(urlRegex);
+// console.log(urlsParams);
+
+
+/**
+ * Extract the host from URL
+ */
+const hostsText = `http://www.learnregexp.com?excercise=extract query from URL
+https://www.google.com/search?q=regexp
+http://pitchimprover.com/index.php?type=Perfect
+http://www.learnregexp.com?excercise=extract host from URL`;
+const hostRegex = /http:\/\/(www.)?[^?\/]+/g;
+const hosts = hostsText.match(hostRegex);
+// console.log(hosts);
+
+
+/**
+ * Match all recipes that do not contain the word 'chocolate' (recipes are separated by newline)
+ */
+const newLineWordText = `Cake 1: sugar, flour, cocoa powder, baking powder, baking soda, salt, eggs, milk, vegetable oil, vanilla extract, chocolate chips
+Cake 2: cream cheese, sugar, vanilla extract, crescent rolls, cinnamon, butter, honey
+Cake 3: dark chocolate cake mix, instant chocolate pudding mix, sour cream, eggs, vegetable oil, coffee liqueur
+Cake 4: flour, baking powder, salt, cinnamon, butter, sugar, egg, vanilla extract, milk, chopped walnuts
+Cake 5: gingersnap cookies, chopped pecans, butter, cream cheese, sugar, vanilla extract, eggs, canned pumpkin, cinnamon
+Cake 6: flour, baking soda, sea salt, butter, white sugar, brown sugar, eggs, vanilla extract, chocolate chips, canola oil
+Cake 7: wafers, cream cheese, sugar, eggs, vanilla extract, cherry pie filling`;
+const newLineRegex = /^(.(?!chocolate))*$/g;
+const findWordInFirstLine = newLineWordText.match(newLineRegex);
+// console.log(findWordInFirstLine);
+
