@@ -66,7 +66,3 @@ const entireLine = anySymbolAndOptional.match(/.*./g); // will match entire line
 
 console.log("heShe", heShe);
 console.log("entireLine", entireLine);
-
-/**
- *
- */
